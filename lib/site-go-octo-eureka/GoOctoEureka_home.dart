@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class GooctoeurekaHome extends StatefulWidget {
   const GooctoeurekaHome({super.key});
@@ -16,6 +17,15 @@ class _GooctoeurekaHomeState extends State<GooctoeurekaHome> {
     var isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
 
+    String? encodeQueryParameters(Map<String, String> params) {
+      return params.entries
+          .map(
+            (MapEntry<String, String> e) =>
+                '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}',
+          )
+          .join('&');
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -23,6 +33,27 @@ class _GooctoeurekaHomeState extends State<GooctoeurekaHome> {
           scrollDirection: isLandscape ? Axis.horizontal : Axis.vertical,
           child: Column(
             children: [
+              Center(
+                child: Text("GoFindTransit", style: TextStyle(fontSize: 30)),
+              ),
+              SizedBox(height: 20),
+              Center(
+                child: FilledButton.icon(
+                  onPressed: () {
+                    final Uri emailLaunchUri = Uri(
+                      scheme: 'mailto',
+                      path: 'feedback@gorunapp.live',
+                      query: encodeQueryParameters(<String, String>{
+                        'subject':
+                            'GoFindTransit | Feedback & Feature Requests!',
+                      }),
+                    );
+                    launchUrl(emailLaunchUri);
+                  },
+                  icon: const Icon(Icons.mail),
+                  label: const Text('Support & Feedback'),
+                ),
+              ),
               isLandscape
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -37,11 +68,11 @@ class _GooctoeurekaHomeState extends State<GooctoeurekaHome> {
                               children: [
                                 // image
                                 Center(
-                                child: Image(
-                                  image: AssetImage(
-                                    'assets/img/SearchRoutes.gif',
+                                  child: Image(
+                                    image: AssetImage(
+                                      'assets/img/SearchRoutes.gif',
+                                    ),
                                   ),
-                                ),
                                 ),
                                 // description
                                 Padding(
@@ -132,11 +163,11 @@ class _GooctoeurekaHomeState extends State<GooctoeurekaHome> {
                               children: [
                                 // image
                                 Center(
-                                child: Image(
-                                  image: AssetImage(
-                                    'assets/img/SearchRoutes.gif',
+                                  child: Image(
+                                    image: AssetImage(
+                                      'assets/img/SearchRoutes.gif',
+                                    ),
                                   ),
-                                ),
                                 ),
                                 // description
                                 Padding(
