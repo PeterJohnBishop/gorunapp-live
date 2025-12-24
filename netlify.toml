@@ -1,0 +1,10 @@
+[build]
+  # This installs Flutter, adds it to the PATH, and builds the app
+  command = """
+    if [ ! -d "flutter" ]; then git clone https://github.com/flutter/flutter.git -b stable; fi &&
+    ./flutter/bin/flutter build web --release
+  """
+  publish = "build/web"
+
+[build.environment]
+  FLUTTER_VERSION = "stable"
